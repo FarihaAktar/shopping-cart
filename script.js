@@ -6,5 +6,8 @@ plusButton.addEventListener('click', function(){
     const totalNumberOfPhone = parseNumber + 1;
     document.getElementById("phone-quantity").value = totalNumberOfPhone;
 
-    
+    const phoneBudget = document.getElementById("phone-budget").innerHTML;
+    const phoneBudgetNumber = parseFloat(phoneBudget);
+    const totalPhoneBudget = phoneBudgetNumber + 1219;
+    document.getElementById("phone-budget").innerHTML = totalPhoneBudget;
 })
