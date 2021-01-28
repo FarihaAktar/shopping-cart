@@ -4,6 +4,7 @@ plusButton.addEventListener('click', function(){
     getInputNumber("phone-quantity", 1);
     updateSpanText("phone-budget", 1219);
 })
+
 const minusButton = document.getElementById("minus-btn");
 minusButton.addEventListener('click', function(){
     getInputNumber("phone-quantity", 1 * -1);
@@ -16,11 +17,13 @@ phoneCasePlusBtn.addEventListener('click', function(){
     getInputNumber("phoneCase-quantity", 1);
     updateSpanText("phoneCase-budget", 59);
 })
+
 const phoneCaseMinusBtn = document.getElementById("minus-btn-ofPhoneCase");
 phoneCaseMinusBtn.addEventListener('click', function(){
     getInputNumber("phoneCase-quantity", -1 * 1);
     updateSpanText("phoneCase-budget", -1 * 59);
 })
+
 // check out button handler
 const checkOutBtn = document.getElementById("check-out-btn");
 checkOutBtn.addEventListener('click', function(){
