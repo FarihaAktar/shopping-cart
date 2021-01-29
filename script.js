@@ -1,53 +1,72 @@
 // iphone11  button handler
 const plusButton = document.getElementById("plus-btn");
-plusButton.addEventListener('click', function(){
-    getInputNumber("phone-quantity", 1);
-    updateSpanText("phone-budget", 1219);
+plusButton.addEventListener('click', function () {
+    handleProductChange("phone", true);
+
 })
 
 const minusButton = document.getElementById("minus-btn");
-minusButton.addEventListener('click', function(){
-    getInputNumber("phone-quantity", 1 * -1);
-    updateSpanText("phone-budget", -1 * 1219);
+minusButton.addEventListener('click', function () {
+    handleProductChange("phone", false);
+
 
 })
 // iphone11 phone case button handler
 const phoneCasePlusBtn = document.getElementById("plus-btn-ofPhoneCase");
-phoneCasePlusBtn.addEventListener('click', function(){
-    getInputNumber("phoneCase-quantity", 1);
-    updateSpanText("phoneCase-budget", 59);
+phoneCasePlusBtn.addEventListener('click', function () {
+    handleProductChange("phoneCase", true);
+
 })
 
 const phoneCaseMinusBtn = document.getElementById("minus-btn-ofPhoneCase");
-phoneCaseMinusBtn.addEventListener('click', function(){
-    getInputNumber("phoneCase-quantity", -1 * 1);
-    updateSpanText("phoneCase-budget", -1 * 59);
-})
+phoneCaseMinusBtn.addEventListener('click', function () {
+    handleProductChange("phoneCase", false);
 
-// check out button handler
-const checkOutBtn = document.getElementById("check-out-btn");
-checkOutBtn.addEventListener('click', function(){
-    const phoneBudget = parseFloat(document.getElementById("phone-budget").innerHTML);
-    const phoneCaseBudget = parseFloat(document.getElementById("phoneCase-budget").innerHTML);
-    const subTotal = phoneBudget + phoneCaseBudget;
-    document.getElementById("sub-total").innerHTML = subTotal;
-    document.getElementById("total").innerHTML = subTotal;
-    
 })
-
 // definition of functions
-function getInputNumber(id, num){
-    const amount = document.getElementById(id).value;
-    const parseNumber = parseFloat(amount);
-    const totalAmount = parseNumber + num;
-    document.getElementById(id).value = totalAmount;
-    return totalAmount;
+
+function handleProductChange(product, isIncrease) {
+    const productCount = getInputValue(product);
+    let productNewCount = productCount;
+    if (isIncrease == true) {
+        productNewCount = productCount + 1;
+    }
+    if (isIncrease == false && productCount > 0) {
+        productNewCount = productCount - 1;
+    }
+    document.getElementById(product + "-quantity").value = productNewCount;
+    let productBudget = 0;
+    if (product == 'phone') {
+        productBudget = productNewCount * 1219;
+
+    }
+    if (product == 'phoneCase') {
+        productBudget = productNewCount * 59;
+
+    }
+    document.getElementById(product + "-budget").innerHTML = productBudget;
+    calculateTotal();
 }
 
-function updateSpanText(id, num){
-    const budget = document.getElementById(id).innerHTML;
-    const budgetNumber = parseFloat(budget);
-    const totalBudget = budgetNumber + num;
-    document.getElementById(id).innerHTML = totalBudget;
+
+function calculateTotal() {
+    const phoneCount = getInputValue("phone");
+    const phoneCaseCount = getInputValue("phoneCase");
+    const subTotalPrice = phoneCount * 1219 + phoneCaseCount * 59;
+
+
+    document.getElementById("sub-total").innerHTML = subTotalPrice;
+    const tax = Math.round(subTotalPrice * 0.1);
+    document.getElementById("tax-amount").innerHTML = tax;
+    const totalPrice = subTotalPrice + tax;
+
+    document.getElementById("total").innerHTML = totalPrice;
+
 }
 
+
+function getInputValue(product) {
+    const productInput = document.getElementById(product + '-quantity');
+    const productCount = parseInt(productInput.value);
+    return productCount;
+}
